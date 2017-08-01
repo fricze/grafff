@@ -1,18 +1,18 @@
 let graph = ref [];
 
-let edge a b g => List.append [[a, b]] g;
+let edge g a => List.append [[a]] g;
 
-graph := edge 3 4 graph.contents;
+graph := edge graph.contents [3, 4];
 
-graph := edge 4 5 graph.contents;
+graph := edge graph.contents [4, 5];
 
-graph := edge 5 9 graph.contents;
+graph := edge graph.contents [5, 9];
 
-graph := edge 9 1 graph.contents;
+graph := edge graph.contents [9, 1];
 
-graph := edge 1 3 graph.contents;
+graph := edge graph.contents [1, 3];
 
-graph := edge 5 8 graph.contents;
+graph := edge graph.contents [5, 8];
 
 let filterFrom x pair =>
   switch pair {
@@ -28,8 +28,10 @@ let filterTo x pair =>
   | [a, b, ...rest] => false
   };
 
-let fromVerticle x g => List.filter (filterFrom x) g |> List.map (fun [a, b] => b);
+let fromVerticle x g =>
+  List.filter (filterFrom x) g |> List.map (fun [a, b] => b);
 
-let toVerticle x g => List.filter (filterTo x) g |> List.map (fun [a, b] => a);
+let toVerticle x g =>
+  List.filter (filterTo x) g |> List.map (fun [a, b] => a);
 
 let gg = Hashtbl.create;
