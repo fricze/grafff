@@ -18,16 +18,12 @@ let equalWithNth n x el => List.nth el n === x;
 
 let equalWithFirst x el =>
   switch el {
-  | [] => false
-  | [a] => a === x
   | [a, b] => a === x
   | _ => false
   };
 
 let equalWithScnd x el =>
   switch el {
-  | [] => false
-  | [a] => false
   | [a, b] => b === x
   | _ => false
   };
