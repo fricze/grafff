@@ -1,6 +1,6 @@
 let graph = ref [];
 
-let edge g a => List.append [[a]] g;
+let edge g a => List.append [a] g;
 
 graph := edge graph.contents [3, 4];
 
@@ -41,8 +41,28 @@ let toVertex = vertexRelation 1 0;
 
 let gg = Hashtbl.create 10;
 
-let hashEdge g a b => {
-  let l = [];
-  Hashtbl.add g a l;
-  Hashtbl.add g a (List.append b l)
+let hashEdge g (v, b) => Hashtbl.add g v b;
+
+let hashFromVertex g v => Hashtbl.find_all g v;
+
+let hashToVertex g v => {
+  let graph = ref [];
+  Hashtbl.iter
+    (
+      fun a b =>
+        if (b === v) {
+          graph := List.append [a] graph.contents
+        }
+    )
+    g;
+  graph.contents
 };
+
+let show =
+  Hashtbl.iter (
+    fun a b => {
+      let a = string_of_int a;
+      let b = string_of_int b;
+      print_endline ("[" ^ a ^ ", " ^ b ^ "]")
+    }
+  );
