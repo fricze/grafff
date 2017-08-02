@@ -77,15 +77,19 @@ module Ints = Set.Make Int;
 
 let flipIter = flip Hashtbl.iter;
 
-let rec _travel vertex g =>
+let rec _travel beenThere vertex g => {
+  beenThere := List.append [vertex] beenThere.contents;
   if (Hashtbl.mem g vertex) {
     Hashtbl.find_all g vertex |>
     List.iter (
-      fun a => {
-        print_int a;
-        _travel a g
-      }
+      fun a =>
+        if (not (List.mem a beenThere.contents)) {
+          _travel beenThere a g
+        }
     )
-  };
+  }
+};
+
+let travel = _travel (ref []);
 
 let a = Ints.add 4 Ints.empty;
