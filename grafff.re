@@ -21,10 +21,6 @@ graph := edge graph.contents [5, 8];
 /* }; */
 let equalWithNth n x el => List.nth el n === x;
 
-let filterTo = equalWithNth 1;
-
-let filterFrom = equalWithNth 0;
-
 /* switch el { */
 /* | [] => false */
 /* | [a, b] => b === x */
@@ -32,11 +28,13 @@ let filterFrom = equalWithNth 0;
 /* }; */
 let flip f x y => f y x;
 
+let nthFlip = flip List.nth;
+
 let fromVerticle x g =>
-  List.filter (filterFrom x) g |> List.map (flip List.nth 1);
+  List.filter (equalWithNth 0 x) g |> List.map (nthFlip 1);
 
 let toVerticle x g =>
-  List.filter (filterTo x) g |> List.map (flip List.nth 0);
+  List.filter (equalWithNth 1 x) g |> List.map (nthFlip 0);
 
 let gg = Hashtbl.create 10;
 
