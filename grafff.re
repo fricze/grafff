@@ -66,3 +66,5 @@ let show =
       print_endline ("[" ^ a ^ ", " ^ b ^ "]")
     }
   );
+
+let _travel start beenThere vertex g => g;

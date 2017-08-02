@@ -59,20 +59,22 @@ g2.edge(8,9);
 g2.edge(9,13);
 g2.edge(13, 1);
 
-const _travel = start => (verticle, g) => {
-  if (g.has(verticle)) {
-    g.get(verticle).forEach(
+let _travel = (start, beenThere = new Set()) => (vertex, g) => {
+  if (g.has(vertex)) {
+    g.get(vertex).forEach(
       e => {
-        if (e !== start) {
-          console.log(e);
-          _travel(start)(e, g);
+        if (!beenThere.has(e) && e !== start) {
+          beenThere.add(e);
+          _travel(start, beenThere)(e, g);
         }
       }
     );
   }
+
+  return beenThere;
 };
 
-const travel = (verticle, g) => _travel(verticle)(verticle, g);
+let travel = (vertex, g) => _travel(vertex)(vertex, g);
 
 const _findCycle3 = (g, a) => {
   if (!g.has(a)) {
