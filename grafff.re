@@ -67,4 +67,25 @@ let show =
     }
   );
 
-let _travel start beenThere vertex g => g;
+module Int = {
+  type t = int;
+  /* use Pervasives compare */
+  let compare = compare;
+};
+
+module Ints = Set.Make Int;
+
+let flipIter = flip Hashtbl.iter;
+
+let rec _travel vertex g =>
+  if (Hashtbl.mem g vertex) {
+    Hashtbl.find_all g vertex |>
+    List.iter (
+      fun a => {
+        print_int a;
+        _travel a g
+      }
+    )
+  };
+
+let a = Ints.add 4 Ints.empty;
