@@ -14,24 +14,34 @@ graph := edge graph.contents [1, 3];
 
 graph := edge graph.contents [5, 8];
 
-let filterFrom x pair =>
-  switch pair {
-  | [] => false
-  | [a, b] => a === x
-  | [a, b, ...rest] => false
-  };
+/* switch el { */
+/* | [] => false */
+/* | [a, b] => a === x */
+/* | [a, b, ...rest] => false */
+/* }; */
+let equalWithNth n x el => List.nth el n === x;
 
-let filterTo x pair =>
-  switch pair {
-  | [] => false
-  | [a, b] => b === x
-  | [a, b, ...rest] => false
-  };
+let filterTo = equalWithNth 1;
+
+let filterFrom = equalWithNth 0;
+
+/* switch el { */
+/* | [] => false */
+/* | [a, b] => b === x */
+/* | [a, b, ...rest] => false */
+/* }; */
+let flip f x y => f y x;
 
 let fromVerticle x g =>
-  List.filter (filterFrom x) g |> List.map (fun [a, b] => b);
+  List.filter (filterFrom x) g |> List.map (flip List.nth 1);
 
 let toVerticle x g =>
-  List.filter (filterTo x) g |> List.map (fun [a, b] => a);
+  List.filter (filterTo x) g |> List.map (flip List.nth 0);
 
-let gg = Hashtbl.create;
+let gg = Hashtbl.create 10;
+
+let hashEdge g a b => {
+  let l = [];
+  Hashtbl.add g a l;
+  Hashtbl.add g a (List.append b l)
+};
