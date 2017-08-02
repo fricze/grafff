@@ -39,9 +39,9 @@ let nthFlip = flip List.nth;
 let vertexRelation start show vertex graph =>
   List.filter (equalWithNth start vertex) graph |> List.map (nthFlip show);
 
-let fromVertex x g => vertexRelation 0 1;
+let fromVertex = vertexRelation 0 1;
 
-let toVertex x g => vertexRelation 1 0;
+let toVertex = vertexRelation 1 0;
 
 let gg = Hashtbl.create 10;
 
