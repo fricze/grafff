@@ -36,11 +36,12 @@ let flip f x y => f y x;
 
 let nthFlip = flip List.nth;
 
-let fromVerticle x g =>
-  List.filter (equalWithNth 0 x) g |> List.map (nthFlip 1);
+let vertexRelation start show vertex graph =>
+  List.filter (equalWithNth start vertex) graph |> List.map (nthFlip show);
 
-let toVerticle x g =>
-  List.filter (equalWithNth 1 x) g |> List.map (nthFlip 0);
+let fromVertex x g => vertexRelation 0 1;
+
+let toVertex x g => vertexRelation 1 0;
 
 let gg = Hashtbl.create 10;
 
