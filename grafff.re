@@ -14,18 +14,22 @@ graph := edge graph.contents [1, 3];
 
 graph := edge graph.contents [5, 8];
 
-/* switch el { */
-/* | [] => false */
-/* | [a, b] => a === x */
-/* | [a, b, ...rest] => false */
-/* }; */
 let equalWithNth n x el => List.nth el n === x;
 
-/* switch el { */
-/* | [] => false */
-/* | [a, b] => b === x */
-/* | [a, b, ...rest] => false */
-/* }; */
+let equalWithFirst x el =>
+  switch el {
+  | [] => false
+  | [a, b] => a === x
+  | _ => false
+  };
+
+let equalWithScnd x el =>
+  switch el {
+  | [] => false
+  | [a, b] => b === x
+  | _ => false
+  };
+
 let flip f x y => f y x;
 
 let nthFlip = flip List.nth;
