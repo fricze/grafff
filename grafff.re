@@ -82,17 +82,24 @@ let rec _travel start beenThere vertex g :list int =>
     Hashtbl.find_all g vertex |>
     List.iter (
       fun a =>
-        if (not (List.mem a beenThere.contents) && a !== start) {
-          beenThere := List.append [a] beenThere.contents;
-          let f = _travel start beenThere a g;
+        if (not (List.mem a beenThere) && a !== start) {
+          let f = _travel start (List.append [a] beenThere) a g;
           ()
         }
     );
-    beenThere.contents
+    beenThere
   } else {
-    beenThere.contents
+    beenThere
   };
 
-let travel v => _travel v (ref []) v;
+let rec travel1 beenThere vertex (g: Hashtbl.t int int) =>
+  if (Hashtbl.mem g vertex) {
+    List.fold_left
+      (fun acc v => acc @ v) [] (List.map (fun a => travel1 beenThere a g) (Hashtbl.find_all g vertex))
+  } else {
+    [vertex]
+  };
+
+let travel v => _travel v [] v;
 
 let a = Ints.add 4 Ints.empty;
