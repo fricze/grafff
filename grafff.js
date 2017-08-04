@@ -74,6 +74,24 @@ let _travel = (start, beenThere = new Set()) => (vertex, g) => {
   return beenThere;
 };
 
+// WIP
+let rec_travel = (start, beenThere = new Set()) => (vertex, g) => {
+  if (g.has(vertex)) {
+    return g.get(vertex).map(
+      e => {
+        if (!beenThere.has(e) && e !== start) {
+          beenThere.add(e);
+          return rec_travel(start, beenThere)(e, g);
+        } else {
+          return [];
+        }
+      }
+    );
+  }
+
+  return beenThere;
+};
+
 let travel = (vertex, g) => _travel(vertex)(vertex, g);
 
 const _findCycle3 = (g, a) => {

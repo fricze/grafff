@@ -95,7 +95,7 @@ let rec _travel start beenThere vertex g :list int =>
 let rec travel1 beenThere vertex (g: Hashtbl.t int int) =>
   if (Hashtbl.mem g vertex) {
     List.fold_left
-      (fun acc v => acc @ v) [] (List.map (fun a => travel1 beenThere a g) (Hashtbl.find_all g vertex))
+      (fun acc v => acc @ v) beenThere (List.map (fun a => travel1 beenThere a g) (Hashtbl.find_all g vertex))
   } else {
     [vertex]
   };
