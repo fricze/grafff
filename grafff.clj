@@ -11,20 +11,15 @@
   ([g a b] (add-edge g a b)))
 
 (def g (->
- (edge :vertex 90)
- (edge :vertex 80)
- (edge :vertex 70)
-
- (edge 70 100)
- (edge 100 120)
- (edge 120 4)
- (edge 120 6)
- (edge 120 8)))
+        (edge 70 100)
+        (edge 100 120)
+        (edge 120 8)
+        (edge 8 70)))
 
 (defn travel [g v mem]
-  (if (contains? g v)
+  (if (and (not (some #{v} mem)) (contains? g v))
     (reduce
      #(flatten (conj %1 %2))
-     (conj mem v)
-     (map #(travel g % mem) (g v)))
+     mem
+     (map #(travel g % (conj mem v)) (g v)))
     v))
